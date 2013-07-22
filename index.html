@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+    
+    <title>LCD Custom Chars</title>
+    
+    <link rel="stylesheet" href="css/style.min.css">
+</head>
+<body>
+    <section id="header" class="push--top push-half--left">
+        <h2 class="flush--bottom">LCD Custom Chars</h2>
+
+        <p>Use the matrix here to create your custom characters to use in 
+        your Arduino project!</p>
+    </section>
+
+    <div class="grid">
+        <div class="grid__item one-whole">
+            <section id="builder-container" ng-controller="CharsCtrl">
+                    <div class="grid soft">
+                        <div class="grid__item one-fifth">
+                            <ul ng-repeat="char in chars" class="chars-block char-{{ char.id }}">
+                                <li ng-repeat="line in char.lines" class="char-line char-line-{{ line.row }}">
+                                <div ng-repeat="cell in line.cells"  class="cell cell-{{ cell.position }}" ng-class="{active:cell.value}"
+                                    ng-click="toggleCell(char.id, line.row, cell.position, cell.value)"></div>
+                                </li>
+                            </ul>
+                        </div><!--
+
+                     --><div class="grid__item two-fifths" id="char-code">
+                            <div ng-repeat="char in chars">
+                                <!-- <h5>{{ char.name }}</h5> -->
+                                <div class="code-block">
+                                    byte customChars[8] = {<br />
+                                    <span ng-repeat="line in char.lines" class="code-char-definition">
+                                        B<span ng-repeat="cell in line.cells">{{ cell.value }}</span>,<br />
+                                    </span>
+                                    }
+                                </div>
+                            </div>
+                        </div><!-- char code -->
+                    </div><!-- grid-soft chars code output -->
+            </section><!-- chars grid-wrapper -->
+        </div>
+    </div>
+
+    <script src="js/angular.js"></script>
+    <script src="js/CharsCtrl.js"></script>
+</body>
+</html>
